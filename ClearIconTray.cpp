@@ -25,7 +25,7 @@
 //  Unfortunately, it does not work for Windows 7 and earlier.
 //**************************************************************************************
 const char *VerNum = "V1.00" ;
-static char szClassName[] = "ShowWinMsgs" ;
+static char szClassName[] = "ClearIcon" ;
 
 // #define  USE_MS_POWER_MGMT    1
 #undef  USE_MS_POWER_MGMT
@@ -226,7 +226,7 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance,
    LPSTR lpszArgument, int nFunsterStil)
 {
    if (!WeAreAlone (szClassName)) {
-      MessageBox(NULL, "ShowWinMsgs is already running!!", "collision", MB_OK | MB_ICONEXCLAMATION) ;
+      MessageBox(NULL, "ClearIcon is already running!!", "collision", MB_OK | MB_ICONEXCLAMATION) ;
       return 0;
    }
 
