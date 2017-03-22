@@ -40,7 +40,9 @@ static char szClassName[] = "ShowWinMsgs" ;
 
 #include <windows.h>
 #include <stdio.h>   //  for sprintf, for %f support
+#ifdef  USE_MS_POWER_MGMT
 #include <initguid.h>   //  other GUIDs
+#endif
 
 #include "resource.h"
 #include "common.h"
