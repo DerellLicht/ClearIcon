@@ -20,20 +20,40 @@
 //	 =======		======================================
 // 	1.00		Initial release
 //**************************************************************************************
-
+//  Source for USE_MS_POWER_MGMT :
+//  http://stackoverflow.com/questions/12652304/how-to-check-pc-monitor-is-turned-on-or-off-any-tool-or-event-viewer-in-windows
+//  Unfortunately, it does not work for Windows 7 and earlier.
+//**************************************************************************************
 const char *VerNum = "V1.00" ;
 static char szClassName[] = "ShowWinMsgs" ;
 
+// #define  USE_MS_POWER_MGMT    1
+#undef  USE_MS_POWER_MGMT
+
 //lint -esym(767, _WIN32_WINNT)
+// #if (_WIN32_WINNT >= 0x0600)
+#ifdef  USE_MS_POWER_MGMT
+#define _WIN32_WINNT 0x0600
+#else
 #define _WIN32_WINNT 0x0500
+#endif
 
 #include <windows.h>
 #include <stdio.h>   //  for sprintf, for %f support
+#include <initguid.h>   //  other GUIDs
 
 #include "resource.h"
 #include "common.h"
 #include "ClearIconTray.h"
 #include "winmsgs.h"
+
+#ifdef  USE_MS_POWER_MGMT
+static HPOWERNOTIFY hPower = 0 ;
+
+// #define  GUID_SESSION_DISPLAY_STATUS    2B84C20E-AD23-4ddf-93DB-05FFBD7EFCA5
+DEFINE_GUID(GUID_SESSION_DISPLAY_STATUS, 0x2B84C20EL, 0xAD23, 0x4DDF, 0x93, 0xDB, 0x05, 0xFF, 0xBD, 0x7E, 0xFC, 0xA5);
+
+#endif
 
 //***********************************************************************
 
@@ -86,6 +106,10 @@ static LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM l
          syslog("GetSubMenu: %s\n", get_system_message()) ;
       } 
       attach_tray_icon(hwnd, szClassName);
+
+#ifdef  USE_MS_POWER_MGMT
+      hPower = RegisterPowerSettingNotification(hwnd, &GUID_SESSION_DISPLAY_STATUS, 0);
+#endif
       timerID = SetTimer(hwnd, IDT_TIMER, 20, (TIMERPROC) NULL) ;
       return TRUE;
 
@@ -125,6 +149,27 @@ static LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM l
       }
       break;
 
+#ifdef  USE_MS_POWER_MGMT
+   case WM_POWERBROADCAST:
+      if (wParam == PBT_POWERSETTINGCHANGE) {
+         // const POWERBROADCAST_SETTING *pSetting = reinterpret_cast<const POWERBROADCAST_SETTING*>(lParam);
+         const POWERBROADCAST_SETTING *pSetting = (const POWERBROADCAST_SETTING*)(lParam);
+         if (pSetting->PowerSetting == GUID_SESSION_DISPLAY_STATUS) {
+            // assert(pSetting->DataLength >= sizeof(DWORD));
+            // DWORD data = *reinterpret_cast<const DWORD*>(&pSetting->Data);
+            DWORD data = *(const DWORD*)(&pSetting->Data);
+            switch (data) {
+            case 0: /* monitor is off */ break;
+            case 1: /* monitor is on */ 
+               reset_icon_colors(false);
+               break;
+            case 2: /* monitor is dimmed */ break;
+            default:  /* ???? */ break;
+            }
+         }
+      }
+      break;
+#else
    // 00000002 11:37:16.650   [6380] SWMsg: [WM_SYSCOLORCHANGE]   
    // 00000003 11:37:16.650   [6380] SWMsg: [WM_PAINT]   
    // 00000004 11:37:16.650   [6380] SWMsg: [WM_NCPAINT] 
@@ -133,6 +178,7 @@ static LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM l
    case WM_SYSCOLORCHANGE:
       reset_icon_colors(false);
       break;
+#endif
 
    //  handle system-tray messages
    case WM_USER:
@@ -147,6 +193,10 @@ static LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM l
       return TRUE;
 
    case WM_DESTROY:
+#ifdef  USE_MS_POWER_MGMT
+      UnregisterPowerSettingNotification(hPower);
+      hPower = 0;
+#endif
       release_systray_resource();
       PostQuitMessage(0);
       return TRUE;
