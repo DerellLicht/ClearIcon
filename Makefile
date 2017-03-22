@@ -53,7 +53,7 @@ rc.o: $(BIN).rc
 
 ClearIconTray.o: resource.h common.h ClearIconTray.h winmsgs.h
 ClearIcon.o: common.h ClearIconTray.h
-systray.o: resource.h ClearIconTray.h
+systray.o: resource.h common.h ClearIconTray.h
 hyperlinks.o: hyperlinks.h
 about.o: resource.h hyperlinks.h
 config.o: common.h ClearIconTray.h

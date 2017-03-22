@@ -63,8 +63,6 @@ HINSTANCE g_hinst = 0;
 
 static UINT timerID = 0 ;
 
-static HMENU hMenu = NULL ;
-
 //lint -esym(843, show_winmsgs)
 static bool show_winmsgs = false ;
 
@@ -98,15 +96,8 @@ static LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM l
       SendMessage(hwnd, WM_SETICON, ICON_BIG,   (LPARAM) LoadIcon(g_hinst, MAKEINTRESOURCE(IDI_MAINICON)));
       SendMessage(hwnd, WM_SETICON, ICON_SMALL, (LPARAM) LoadIcon(g_hinst, MAKEINTRESOURCE(IDI_MAINICON)));
 
-      //  load menu, hopefully
-      hMenu = LoadMenu (g_hinst, MAKEINTRESOURCE(IDM_POPMENU)) ;
-      if (hMenu == NULL) {
-         syslog("LoadMenu: %s\n", get_system_message()) ;
-      } 
-      hMenu = GetSubMenu(hMenu, 0) ;
-      if (hMenu == NULL) {
-         syslog("GetSubMenu: %s\n", get_system_message()) ;
-      } 
+      //  load menu
+      load_tray_menu();
       attach_tray_icon(hwnd, szClassName);
 
 #ifdef  USE_MS_POWER_MGMT
@@ -184,7 +175,7 @@ static LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM l
 
    //  handle system-tray messages
    case WM_USER:
-      respond_to_tray_clicks(hwnd, hMenu, lParam);
+      respond_to_tray_clicks(hwnd, lParam);
       break;
    
    //********************************************************************
