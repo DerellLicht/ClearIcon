@@ -31,6 +31,9 @@ clean:
 depend:
 	makedepend $(CPPSRC)
 
+wc:
+	wc -l *.cpp *.rc
+
 lint:
 	cmd /C "c:\lint9\lint-nt +v -width(160,4) $(LiFLAGS) +fcp -ic:\lint9 mingw.lnt -os(_lint.tmp) lintdefs.cpp *.rc $(CPPSRC)"
 
