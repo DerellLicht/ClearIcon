@@ -1,0 +1,65 @@
+//****************************************************************************
+//  Copyright (c) 2017  Daniel D Miller
+//
+//  Written by:  Danial D Miller
+//****************************************************************************
+//  Interesting notes about this file:
+//  
+//  > SS_NOTIFY and "Static" controls
+//    If SS_NOTIFY is not specified in the control styles,
+//    you cannot attach tooltips to the control.
+//  
+//****************************************************************************
+
+//lint -e129  declaration expected, identifier 'LTEXT' ignored - this was in my .RC file
+#include <windows.h>
+
+#include "resource.h"
+
+IDI_MAINICON  ICON      scroll.ico
+
+// IDM_POPMENU MENU DISCARDABLE 
+IDM_POPMENU MENU 
+BEGIN
+    POPUP "CI_Menu"
+    BEGIN
+#ifndef _lint
+        MENUITEM "Select new icon color",       IDM_SET_COLOR
+#endif
+        MENUITEM "About ClearIcon",             IDM_ABOUT
+        MENUITEM SEPARATOR
+        MENUITEM "Exit",                        IDM_APP_EXIT
+    END
+END
+
+//*******************************************************************
+//  main dialog
+//  Using WS_EX_TOOLWINDOW, instead of WS_EX_APPWINDOW,
+//  removes the application bar from the Toolbar.
+//*******************************************************************
+IDD_MAIN DIALOGEX 10, 100, 50, 10
+// STYLE DS_MODALFRAME | WS_POPUP | NOT WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+// EXSTYLE WS_EX_APPWINDOW
+// EXSTYLE WS_EX_TOOLWINDOW
+CAPTION "ClearIcon"     //lint !e2  Unclosed Quote
+FONT 11, "Times New Roman"
+BEGIN
+
+END
+
+//*******************************************************************
+IDD_ABOUT DIALOG DISCARDABLE  200, 200, 150, 90
+// STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "About ClearIcon"
+FONT 10, "Times New Roman"
+BEGIN
+    ICON            IDI_MAINICON,IDC_STATIC,9,12
+    LTEXT           "ClearIcon",IDC_STATIC,                36,15, 50,12
+    LTEXT           "V1.00",IDC_VERNUM,                    90,15, 50,12
+    LTEXT           "Copyright (c) 2007-2017",IDC_STATIC,  36,28,100,12
+    LTEXT           "Daniel D Miller",IDC_STATIC,          36,41,100,12
+    // PUSHBUTTON      "home.comcast.net/~derelict",IDC_WEBLINK,  36,54,100,12
+    LTEXT           "derelllicht.com",IDC_WEBLINK,         36,54,100,12
+    DEFPUSHBUTTON   "Close",IDOK,                          36,70,100,14
+END
+
