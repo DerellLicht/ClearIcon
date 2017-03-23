@@ -31,6 +31,7 @@ static char szClassName[] = "ClearIcon" ;
 
 #include "resource.h"
 #include "common.h"
+#include "systray.h"
 #include "ClearIconTray.h"
 #include "winmsgs.h"
 

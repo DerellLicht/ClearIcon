@@ -1,6 +1,6 @@
 //**************************************************************************************
 //  Copyright (c) 2017  Daniel D Miller
-//  Handlers for system-tray connection
+//  Handlers for system-tray access
 //  
 //  Collected by:   Daniel D. Miller
 //**************************************************************************************
@@ -9,6 +9,7 @@
 
 #include "resource.h"
 #include "common.h"
+#include "systray.h"
 #include "ClearIconTray.h"
 
 extern HINSTANCE g_hinst ;

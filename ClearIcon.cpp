@@ -59,7 +59,6 @@
 #define _WIN32_WINNT 0x0500
 
 #include <windows.h>
-#include <stdio.h>   //  for sprintf, for %f support
 #include <commctrl.h>
 
 #include "common.h"
@@ -74,28 +73,10 @@ unsigned fg_attr = 0x41c345 ;
  * as desired, was extracted from Nancy Cluts, Chapter 06, cmndlg32.
  * The technique of setting the dialog position by trapping WM_INITDIALOG
  * in the hook procedure, was taken from comments on the web.
- ****************************************************************************
-*
-*    FUNCTION: ChooseColorHookProc(HWND, UINT, UINT, LONG)
-*
-*    PURPOSE:  Processes messages for ChooseColor common dialog box
-*
-*    COMMENTS:
-*
-*        This hook procedure simply prompts the user whether or not they
-*        want to change the color.  if they choose YES, the color of the
-*        text will be changed and the dialog will be dismissed.  If they
-*        choose NO, the color will not be changed and the user will be
-*        returned to the dialog
-*
-*    RETURN VALUES:
-*        TRUE - User chose 'Yes' from the "Are you sure message box".
-*        FALSE - User chose 'No'; return to the dialog box.
-*
 ****************************************************************************/
 static BOOL APIENTRY ChooseColorHookProc(
-        HWND hDlg,                /* window handle of the dialog box */
-        UINT message,             /* type of message                 */
+        HWND hDlg,              /* window handle of the dialog box */
+        UINT message,           /* type of message                 */
         UINT wParam,            /* message-specific information    */
         LONG lParam)
 {
@@ -141,11 +122,7 @@ static unsigned select_color(void)
    cc.lpfnHook = (LPCCHOOKPROC)ChooseColorHookProc;
    cc.lpTemplateName = (LPTSTR)NULL;
 
-   if (ChooseColor(&cc) == TRUE) {
-      return cc.rgbResult ;
-   } else {
-      return 0 ;
-   }
+   return (ChooseColor(&cc) == TRUE) ? cc.rgbResult : 0 ;
 }
 
 //***************************************************************************
