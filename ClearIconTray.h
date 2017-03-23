@@ -4,7 +4,6 @@ LRESULT read_config_file(void);
 
 //  ClearIcon.cpp
 extern unsigned fg_attr ;
-// void set_change_flag(void);
 void reset_icon_colors(bool my_select_color);
 
 //  systray.cpp
