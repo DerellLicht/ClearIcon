@@ -67,10 +67,6 @@ static LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM l
    switch (message) {
    // case WM_CREATE:
    case WM_INITDIALOG:
-      //**********************************************************
-      //  do other config tasks *after* creating fields,
-      //  so we can display status messages.
-      //**********************************************************
       SendMessage(hwnd, WM_SETICON, ICON_BIG,   (LPARAM) LoadIcon(g_hinst, MAKEINTRESOURCE(IDI_MAINICON)));
       SendMessage(hwnd, WM_SETICON, ICON_SMALL, (LPARAM) LoadIcon(g_hinst, MAKEINTRESOURCE(IDI_MAINICON)));
 
