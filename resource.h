@@ -19,6 +19,8 @@
 #define  IDM_APP_EXIT         1001
 #define  IDM_ABOUT            1002
 #define  IDM_SET_COLOR        1003
+#define  IDM_DEBUG            1004
+#define  IDM_SET_NOW          1005
 
 //  'about' dialog
 #define  IDC_WEBLINK          2000

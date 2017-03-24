@@ -26,6 +26,8 @@ BEGIN
 #ifndef _lint
         MENUITEM "Select new icon color",       IDM_SET_COLOR
 #endif
+        MENUITEM "Set icon colors now",         IDM_SET_NOW
+        MENUITEM "Toggle debug output",         IDM_DEBUG
         MENUITEM "About ClearIcon",             IDM_ABOUT
         MENUITEM SEPARATOR
         MENUITEM "Exit",                        IDM_APP_EXIT
@@ -54,7 +56,7 @@ CAPTION "About ClearIcon"
 FONT 10, "Times New Roman"
 BEGIN
     ICON            IDI_MAINICON,IDC_STATIC,9,12
-    LTEXT           "ClearIcon",IDC_STATIC,                36,15, 40,12
+    LTEXT           "ClearIcon",IDC_STATIC,                36,15, 40,12 //lint !e2  Unclosed Quote
     LTEXT           "V1.00",IDC_VERNUM,                    80,15, 50,12
     LTEXT           "Copyright (c) 2007-2017",IDC_STATIC,  36,28,100,12
     LTEXT           "Derell Licht",IDC_STATIC,             36,41,100,12

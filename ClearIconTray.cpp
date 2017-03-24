@@ -105,6 +105,15 @@ static LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM l
             CmdAbout(hwnd);
             return TRUE;
 
+         case IDM_SET_NOW:
+            reset_icon_colors(false);
+            return TRUE;
+
+         case IDM_DEBUG:
+            show_winmsgs = (show_winmsgs) ? false : true ;
+            syslog("ClearIconTray: debug=%s\n", show_bool_str(show_winmsgs));
+            return TRUE;
+
          case IDM_APP_EXIT:
             DestroyWindow(hwnd);
             return TRUE;
