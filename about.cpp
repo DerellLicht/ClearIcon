@@ -58,7 +58,7 @@ static BOOL CALLBACK AboutDlgProc(HWND hdlg, UINT uMessage, WPARAM wparam, LPARA
    case WM_COMMAND:
       switch (LOWORD(wparam)) {
       case IDC_WEBLINK:
-         ShellExecute(hdlg, "open", "http://www.derelllicht.com", "", "", SW_SHOW);
+         ShellExecute(hdlg, "open", "http://www.derelllicht.com/freeware.html", "", "", SW_SHOW);
          return TRUE;
          
       case IDOK:
