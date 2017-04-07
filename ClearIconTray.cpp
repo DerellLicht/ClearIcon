@@ -131,6 +131,11 @@ static LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM l
    // 00000005 11:37:16.655   [6380] SWMsg: [WM_ERASEBKGND] 
    // 00000006 11:37:16.655   [6380] SWMsg: [WM_CTLCOLORDLG]   
    case WM_SYSCOLORCHANGE:
+   // 00000826 13:10:04.124   [5108] SWMsg: [WM_DISPLAYCHANGE] 
+   // 00000827 13:10:04.125   [4104] 2017-04-07 13:10:10.824 (  87756.863) |    
+   //    DEBUG: [UXDriver.ApiX.MessageTranslator] 325@Nvidia::UXDriver::ApiX::MessageTranslator::Translate : 
+   //           message(0x7e) wparam(0x20) lParam(0x6400a00): 9, translated(1).   
+   case WM_DISPLAYCHANGE:
       reset_icon_colors(false);
       break;
 
